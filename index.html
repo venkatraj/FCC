@@ -1,0 +1,51 @@
+<!doctype html>
+<!doctype html>
+<html>
+  <head>
+    <title>Test</title>
+    <script type="text/javascript">
+    var contacts = [
+    {
+        "firstName": "Akira",
+        "lastName": "Laine",
+        "number": "0543236543",
+        "likes": ["Pizza", "Coding", "Brownie Points"]
+    },
+    {
+        "firstName": "Harry",
+        "lastName": "Potter",
+        "number": "0994372684",
+        "likes": ["Hogwarts", "Magic", "Hagrid"]
+    },
+    {
+        "firstName": "Sherlock",
+        "lastName": "Holmes",
+        "number": "0487345643",
+        "likes": ["Intriguing Cases", "Violin"]
+    },
+    {
+        "firstName": "Kristian",
+        "lastName": "Vos",
+        "number": "unknown",
+        "likes": ["Javascript", "Gaming", "Foxes"]
+    }
+];
+
+
+function compare(property) {
+	return function(obj1, obj2) {
+		var prop1 = obj1[property];
+		var prop2 = obj2[property];
+
+		return prop1 > prop2;
+	}
+}
+
+contacts.sort(compare("lastName"));
+console.log(contacts);
+
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
