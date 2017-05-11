@@ -20,3 +20,24 @@ function steamrollArray(arr) {
 }
 
 steamrollArray([1, [2], [3, [[4]]]]);
+
+/**
+ * Better One
+ * No need for extra forEach()
+ */
+
+function steamrollArray(arr) {
+    // I'm a steamroller, baby
+    var result = [];
+    function flatten(val) {
+        val.forEach(function(ele) {
+            if(Array.isArray(ele)) {
+                flatten(ele);
+            } else {
+                result.push(ele);
+            }
+        });
+    }
+    flatten(arr);
+    return result;
+}

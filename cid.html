@@ -1,0 +1,105 @@
+<html>
+<head>
+    <title>Cash Register</title>
+    <script>
+        function changeCID(cid) {
+            var result = {};
+            result['100'] = Math.ceil( cid[8][1] / 100 );
+            result['20'] = Math.ceil( cid[7][1] / 20 );
+            result['10'] = Math.ceil( cid[6][1] / 10 );
+            result['5'] = Math.ceil( cid[5][1] / 5 );
+            result['1'] = Math.ceil( cid[4][1] / 1 );
+            result['0.25'] = Math.ceil( cid[3][1] /.25 );
+            result['0.1'] = Math.ceil( cid[2][1] /.10 );
+            result['0.05'] = Math.ceil( cid[1][1] /.05 );
+            result['0.01'] = Math.ceil( cid[0][1] /.01 );
+            return result;
+        }
+
+
+        function checkCashRegister(price, cash, cid) {
+            var change = [];
+// Here is your change, ma'am.
+            var denominations = [100,20,10,5,1,0.25,0.1,0.05,0.01];
+            var diff = cash - price;
+            var times = 1;
+            cid = changeCID(cid);
+           // console.log(cid);
+
+            function isAvailable(val, times) {
+                if(cid.hasOwnProperty(val) && cid[val] * val >= val * times) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            function total(arr) {
+                var sum = 0;
+                sum += arr[0] * 100;
+                sum += arr[1] * 20;
+                sum += arr[2] * 10;
+                sum += arr[3] * 5;
+                sum += arr[4] * 1;
+                sum += arr[5] * 0.25;
+                sum += arr[6] * 0.1;
+                sum += arr[7] * 0.05;
+                sum += arr[8] * 0.01;
+                return sum;
+            }
+
+            function status() {
+                var totalChange, totalCash, diff;
+                diff = cash - price;
+                totalChange = total(change);
+                totalCash = total(cid);
+
+                console.log('Sum' + totalChange + ' and diff ' + diff);
+                if(totalChange < diff ) {
+                    return 'Insufficient Funds';
+                }
+                console.log('totalChange' + totalChange + ' and totalCash ' + totalCash);
+                if(totalChange < totalCash) {
+                    return change;
+                } else {
+                    return 'Closed';
+                }
+
+            }
+
+            denominations.forEach(function(val){
+                times = 1;
+                //console.log(diff);
+                while(diff >= val * times && isAvailable(val, times)) {
+                    times++;
+                }
+                times--;
+                change.push(times);
+                //console.log(val + ' * ' +  times + ' = ' + val * times);
+                diff -= val * times;
+            });
+            return status();
+
+        }
+
+
+
+        // Example cash-in-drawer array:
+        // [["PENNY", 1.01],
+        // ["NICKEL", 2.05],
+        // ["DIME", 3.10],
+        // ["QUARTER", 4.25],
+        // ["ONE", 90.00],
+        // ["FIVE", 55.00],
+        // ["TEN", 20.00],
+        // ["TWENTY", 60.00],
+        // ["ONE HUNDRED", 100.00]]
+
+        var result = checkCashRegister(19.50, 20.00, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.10], ["QUARTER", 4.25], ["ONE", 90.00], ["FIVE", 55.00], ["TEN", 20.00], ["TWENTY", 60.00], ["ONE HUNDRED", 100.00]]);
+        console.log(result);
+    </script>
+</head>
+<body>
+
+</body>
+</html>

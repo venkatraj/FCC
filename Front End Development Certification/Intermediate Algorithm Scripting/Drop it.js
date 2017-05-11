@@ -22,6 +22,20 @@ dropElements([0, 1, 0, 1], function (n) {
     return n === 1;
 });
 
+/**
+ * Better one
+ */
+
+function dropElements(arr, func) {
+    // Drop them elements.
+    for(var i = 0; i < arr.length; i++) {
+        if( func(arr[i]) ) {
+            break;
+        }
+    }
+    return arr.slice(i);
+}
+
 /*
 function drop(arr, func) {
     // Drop them elements.
